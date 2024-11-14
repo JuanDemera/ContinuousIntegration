@@ -18,6 +18,7 @@ def test_calculate_total_cost_special_discount():
     total = calculate_total_cost(base, additional, group=False, special=True, premium=False)
     assert total == 430  # (450 - 20)
 
+
 def test_calculate_total_cost_premium_surcharge():
     base = 200
     additional = 100
