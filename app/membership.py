@@ -38,24 +38,11 @@ membership_plans = {
 
 class Membership:
     def __init__(self):
-        self.selected_plan = None
-        self.selected_features = []
-
-    def get_available_plans(self):
-        return list(membership_plans.keys())
+        self.selected_plan = None  # Cambiar nombre si es necesario
 
     def select_plan(self, plan_name):
         for plan in membership_plans:
             if plan.value == plan_name:
                 self.selected_plan = plan
-                return self
+                return self  # Devuelve el objeto actual
         raise ValueError(f"Plan de membresía '{plan_name}' no disponible.")
-
-    def add_feature(self, feature_name):
-        if not self.selected_plan:
-            raise ValueError("No se ha seleccionado una membresía.")
-        for feature in membership_plans[self.selected_plan]['features']:
-            if feature.value == feature_name:
-                self.selected_features.append(feature)
-                return self
-        raise ValueError(f"Característica adicional '{feature_name}' no disponible para el plan seleccionado.")
