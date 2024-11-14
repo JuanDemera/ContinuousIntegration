@@ -1,4 +1,4 @@
-name: CI Workflow for Flask
+name: CI Workflow for Gym Membership Management System
 
 on:
   # Opción 2: Disparar el workflow en pull requests a la rama main
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout el código del repositorio
+      # Paso 1: Checkout del código del repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -27,13 +27,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Paso 4: Analizar el código con pylint
-      - name: Analyze code with pylint
+      # Paso 4: Analizar el código con Flake8
+      - name: Lint code with Flake8
         run: |
-          pip install pylint
-          pylint $(git ls-files '*.py')
+          pip install flake8
+          flake8 .
 
-      # Paso 5: Ejecutar pruebas
+      # Paso 5: Ejecutar pruebas con Pytest
       - name: Run tests
         run: |
           pytest
