@@ -1,38 +1,3 @@
-import sys
-from membership import Membership, MembershipType, AdditionalFeature
-from utils import calculate_total_cost, validate_membership
-membership_plans = {
-    MembershipType.BASIC: {
-        'base_cost': 50,
-        'features': {
-            AdditionalFeature.PERSONAL_TRAINING: 20,
-            AdditionalFeature.GROUP_CLASSES: 15
-        }
-    },
-    MembershipType.PREMIUM: {
-        'base_cost': 100,
-        'features': {
-            AdditionalFeature.PERSONAL_TRAINING: 30,
-            AdditionalFeature.GROUP_CLASSES: 25,
-            AdditionalFeature.EXCLUSIVE_ACCESS: 40,
-            AdditionalFeature.SPECIAL_TRAINING: 35
-        }
-    },
-    MembershipType.FAMILY: {
-        'base_cost': 150,
-        'features': {
-            AdditionalFeature.GROUP_CLASSES: 20
-        }
-    }
-}
-def display_plans(membership):
-    print("Planes de Membresía Disponibles:")
-    for plan in membership.get_available_plans():
-        details = membership_plans[plan]
-        print(f"- {plan.value}: ${details['base_cost']}")
-        for feature, cost in details['features'].items():
-            print(f"  • {feature.value}: +${cost}")
-
 def main():
     membership = Membership()
     
@@ -59,12 +24,23 @@ def main():
         group = False
         special = False
         premium = False
+        renewal_discount = False
         
         group_input = input("¿Está inscrito como grupo? (s/n): ").lower()
         if group_input == 's':
             group = True
+            
+        # Nueva funcionalidad: aplicar descuento por renovación
+        renewal_input = input("¿Está renovando su membresía? (s/n): ").lower()
+        if renewal_input == 's':
+            renewal_discount = True
         
+        # Calcular el costo total
         total_cost = calculate_total_cost(base_cost, additional_cost, group=group, special=special, premium=premium)
+        
+        # Aplicar descuento de renovación si es aplicable
+        if renewal_discount:
+            total_cost *= 0.9  # Aplicar un 10% de descuento
         
         # Paso 5: Confirmación del Usuario
         print("\nResumen de Membresía:")
@@ -73,7 +49,7 @@ def main():
             print("Características adicionales:")
             for feature in membership.selected_features:
                 print(f"  • {feature.value} - ${membership_plans[membership.selected_plan]['features'][feature]}")
-        print(f"Costo total: ${total_cost}")
+        print(f"Costo total: ${total_cost:.2f}")
         
         confirm = input("¿Desea confirmar esta membresía? (s/n): ").lower()
         if confirm == 's':
