@@ -1,4 +1,4 @@
-name: CI Workflow for Gym Membership Management System
+name: CI Workflow for Gym Membership Management
 
 on:
   # Opción 2: Disparar el workflow en pull requests a la rama main
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout del código del repositorio
+      # Paso 1: Checkout el código del repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -27,13 +27,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Paso 4: Analizar el código con Flake8
-      - name: Lint code with Flake8
+      # Paso 4: Analizar el código con flake8
+      - name: Lint code with flake8
         run: |
-          pip install flake8
-          flake8 .
+          flake8 app/ tests/
 
-      # Paso 5: Ejecutar pruebas con Pytest
-      - name: Run tests
+      # Paso 5: Ejecutar pruebas
+      - name: Run tests with pytest
         run: |
           pytest
