@@ -40,9 +40,13 @@ class Membership:
     def __init__(self):
         self.selected_plan = None  # Cambiar nombre si es necesario
 
+    def get_available_plans(self):
+        # Retorna los valores de MembershipType
+        return [plan for plan in MembershipType]
+
     def select_plan(self, plan_name):
-        for plan in membership_plans:
-            if plan.value == plan_name:
-                self.selected_plan = plan
-                return self  # Devuelve el objeto actual
-        raise ValueError(f"Plan de membresía '{plan_name}' no disponible.")
+        try:
+            self.selected_plan = MembershipType(plan_name)
+        except ValueError:
+            raise ValueError(f"Plan de membresía '{plan_name}' no disponible.")
+        return self  # Devuelve el objeto actual
